@@ -5,34 +5,35 @@
 #include <string.h>
 #include "types.h"
 #include "input.h"
+#include "sort_func.h"
 
-int main()
+int main(/*int argc, char* argv[]*/)
 {
-    struct Length    length = {};
-    struct FileNames f_names;
-    char* buffer = make_buf(&length, f_names);
-    input_to_buf(buffer, f_names, &length);
-    char** array_of_ptr_to_str = make_array_of_ptr_to_str(buffer, &length);
-    put_ptr_to_str (array_of_ptr_to_str, buffer, &length);
+    struct FileNames fnames;
+    //fnames.f_name = argv[1];
+    struct Text text = {};
+
+    make_buf(&fnames, &text);      // ctor_text(&text) == constuct buffer; dtor_buf
+    input_to_buf(&fnames, &text);
+    make_array_of_ptr_to_str(&text);
+    put_ptr_to_str (&text);
+
+    func_to_sort(&text);
 
 
 
-    //bubble sort/////////////////////
 
-
-
-
-
+    FILE *fp = fopen(fnames.sort_f_name, "w");
     int i = 0;
-    while(i < length.num_of_lines)
+    while(i < text.n_lines)
     {
-        printf("%d <%s>\n", i, array_of_ptr_to_str[i]);
+        fprintf(fp,"%d <%s>\n", (text.adress_of_str_parameters + i)->sz_of_str, (text.adress_of_str_parameters + i)->ptr2str);//mistake in strlen in string structure
         i++;
     }
     //printf("%s\n", array_of_str[++i]);
     //printf("%s\n %s\n", array_of_str, *array_of_str);
-    free(array_of_ptr_to_str);
-    free(buffer);
+    free(text.adress_of_buf);
+    free(text.adress_of_str_parameters);
 
 
 

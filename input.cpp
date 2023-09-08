@@ -2,61 +2,63 @@
 #include <sys/stat.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "input.h"
 
 
-char* make_buf (struct Length* length, struct FileNames f_names)
+void make_buf (struct FileNames* fnames, struct Text* text)
 {
     struct stat statistic = {};
 
-    stat(f_names.f_name, &statistic);
+    stat(fnames->f_name, &statistic);
 
-    length->length_of_buf = statistic.st_size;
-    char *buffer         = (char*)calloc(length->length_of_buf , sizeof(char));
-    return buffer;
+    text->size_of_buf = statistic.st_size;
+    text->adress_of_buf = (char*)calloc(text->size_of_buf, sizeof(char));
 }
 
 
-void input_to_buf (char* buffer, struct FileNames f_names, struct Length* length)
+void input_to_buf (struct FileNames* fnames, struct Text* text)
 {
-    FILE* file_adress = fopen(f_names.f_name, "r");
+    FILE* file_adress = fopen(fnames->f_name, "r");
 
     assert(file_adress);
-    assert(fread(buffer, sizeof(char), length->length_of_buf, file_adress));
+    fread(text->adress_of_buf, sizeof(char), text->size_of_buf, file_adress);
+    assert(text->adress_of_buf);
 }
 
-char** make_array_of_ptr_to_str(char* buffer, struct Length* length)
+void make_array_of_ptr_to_str(struct Text* text)
 {
-    for (int counter = 0; counter < length->length_of_buf; counter++)
+    assert(text);
+    for (int counter = 0; counter < text->size_of_buf; counter++)
     {
-        if (buffer[counter] == '\n' || buffer[counter] == EOF)//возможно на еоф придется еще лдну ячейку выделять
+        if (text->adress_of_buf[counter] == '\n' || text->adress_of_buf[counter] == EOF)//возможно на еоф придется еще лдну ячейку выделять
         {
-            buffer[counter] = '\0';
-            length->num_of_lines++;
+            text->adress_of_buf[counter] = '\0';
+            text->n_lines++;
         }
     }
 
-    char** array_of_ptr_to_str = (char**) calloc(length->num_of_lines, sizeof(char*));
-    assert(array_of_ptr_to_str);
+    text->adress_of_str_parameters = (Str_parameters*)calloc(text->n_lines, sizeof(Str_parameters));
+    assert(text->adress_of_str_parameters);
 
-    return array_of_ptr_to_str;
 }
 
-void put_ptr_to_str (char** array_of_ptr_to_str, char* buffer,  struct Length* length)
+void put_ptr_to_str (struct Text* text)
 {
     int symb_counter     = 0;
     int ptr_to_str_count = 0;
 
-    while(ptr_to_str_count < length->num_of_lines)
+    while(ptr_to_str_count < text->n_lines)
     {
-        array_of_ptr_to_str[ptr_to_str_count] = buffer + symb_counter;
+        (text->adress_of_str_parameters + ptr_to_str_count)->ptr2str = text->adress_of_buf + symb_counter;//возможно ошибка
+        (text->adress_of_str_parameters + ptr_to_str_count)->sz_of_str = strlen((text->adress_of_str_parameters + ptr_to_str_count)->ptr2str);
 
-        while(buffer[symb_counter] != '\0')
+        while(*(text->adress_of_buf + symb_counter) != '\0')
         {
             symb_counter++;
         }
-        if(buffer[symb_counter] == '\0')
+        if(*(text->adress_of_buf + symb_counter) == '\0')
         {
             symb_counter++;
         }
