@@ -17,6 +17,7 @@ int main(/*int argc, char* argv[]*/)
     input_to_buf(&fnames, &text);
     make_array_of_ptr_to_str(&text);
     put_ptr_to_str (&text);
+    symb_counter(&text);
 
     func_to_sort(&text);
 
@@ -27,7 +28,7 @@ int main(/*int argc, char* argv[]*/)
     int i = 0;
     while(i < text.n_lines)
     {
-        fprintf(fp,"%d <%s>\n", (text.adress_of_str_parameters + i)->sz_of_str, (text.adress_of_str_parameters + i)->ptr2str);//mistake in strlen in string structure
+        fprintf(fp,"%d %d <%s>\n",(&text.str_parameters + i), (text.adress_of_str_parameters + i)->sz_of_str, (text.adress_of_str_parameters + i)->ptr2str);//mistake in strlen in string structure
         i++;
     }
     //printf("%s\n", array_of_str[++i]);
