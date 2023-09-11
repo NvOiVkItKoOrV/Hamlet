@@ -3,8 +3,8 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include "types.h"
-#include "input.h"
+#include "../include/types.h"
+#include "../include/input.h"
 
 
 void make_buf(struct FileNames* fnames, struct Text* text)

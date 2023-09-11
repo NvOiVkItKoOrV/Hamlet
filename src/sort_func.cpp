@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "types.h"
-#include "input.h"
-#include "sort_func.h"
+#include "../include/types.h"
+#include "../include/input.h"
+#include "../include/sort_func.h"
 
 
 void func_to_sort(struct Text* text)

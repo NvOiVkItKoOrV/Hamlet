@@ -9,8 +9,8 @@ struct Str_parameters
 
 struct FileNames
 {
-    char* f_name      = "Hamlet.txt";
-    char* sort_f_name = "SortHamlet.txt";
+    char* f_name      /*= "Hamlet.txt"*/;
+    char* sort_f_name /*= "SortHamlet.txt"*/;
 };
 
 struct Text {
