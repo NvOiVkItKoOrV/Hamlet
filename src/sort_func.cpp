@@ -10,21 +10,22 @@
 void func_to_sort(struct Text* text)
 {
     int (*adress_of_func2sort)(Str_parameters** str1, Str_parameters** str2);
-    adress_of_func2sort = sort_pair_of_str_fr_end;
+    adress_of_func2sort = sort_pair_of_str;
     my_bubble_sort(text->adress_of_str_parameters, text->n_lines, adress_of_func2sort);
 
 }
 
 
-void my_bubble_sort(Str_parameters* adress_of_str_parameters, int length,
+void my_bubble_sort(Str_parameters* adress_of_str_parameters, size_t length,
                     int (*check_pair)(Str_parameters** str1, Str_parameters** str2))      //qsort prototype
 {
-    for(int str_counter = 0; str_counter < length - 1; str_counter++)
-        for(int counter = 0; counter < length - 1; counter++)
+    for(size_t str_counter = 0; str_counter < length - 1; str_counter++)
+        for(size_t counter = 0; counter < length - 1; counter++)
         {
             Str_parameters* adress1 = adress_of_str_parameters + counter;
             Str_parameters* adress2 = adress_of_str_parameters + counter + 1;
             int check = check_pair(&adress1, &adress2);
+
             switch(check)
             {
             case IS_GREATER:
@@ -48,8 +49,6 @@ int sort_pair_of_str(Str_parameters** str1, Str_parameters** str2)
 {
     char* isletter1 = (*str1)->ptr2str;
     char* isletter2 = (*str2)->ptr2str;
-
-    int counter = 0;
 
     while(!isalpha(*isletter1))
         isletter1++;

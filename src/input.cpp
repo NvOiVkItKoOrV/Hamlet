@@ -13,7 +13,7 @@ void make_buf(struct FileNames* fnames, struct Text* text)
 
     stat(fnames->f_name, &statistic);
 
-    text->size_of_buf = statistic.st_size;
+    text->size_of_buf = (size_t)statistic.st_size;
     text->adress_of_buf = (char*)calloc(text->size_of_buf, sizeof(char));
 }
 
@@ -30,7 +30,7 @@ void input_to_buf(struct FileNames* fnames, struct Text* text)
 void make_array_of_ptr_to_str(struct Text* text)
 {
     assert(text);
-    for (int counter = 0; counter < text->size_of_buf; counter++)
+    for (size_t counter = 0; counter < text->size_of_buf; counter++)
     {
         if (text->adress_of_buf[counter] == '\n' || text->adress_of_buf[counter] == EOF)
         {
@@ -47,7 +47,7 @@ void make_array_of_ptr_to_str(struct Text* text)
 void put_ptr_to_str(struct Text* text)
 {
     int symb_counter     = 0;
-    int ptr_to_str_count = 0;
+    size_t ptr_to_str_count = 0;
 
     while(ptr_to_str_count < text->n_lines)
     {
@@ -68,10 +68,10 @@ void put_ptr_to_str(struct Text* text)
 
 void symb_counter(struct Text* text)
 {
-    int counter = 0;
+    size_t counter = 0;
     while(counter < text->n_lines)
     {
-        (text->adress_of_str_parameters + counter)->sz_of_str = strlen((text->adress_of_str_parameters + counter)->ptr2str);
+        (text->adress_of_str_parameters + counter)->sz_of_str = (int)strlen((text->adress_of_str_parameters + counter)->ptr2str);
         counter++;
     }
 
