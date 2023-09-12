@@ -10,7 +10,7 @@
 void func_to_sort(struct Text* text)
 {
     int (*adress_of_func2sort)(Str_parameters** str1, Str_parameters** str2);
-    adress_of_func2sort = sort_pair_of_str;
+    adress_of_func2sort = sort_pair_of_str_fr_end;
     my_bubble_sort(text->adress_of_str_parameters, text->n_lines, adress_of_func2sort);
 
 }
@@ -71,11 +71,16 @@ int sort_pair_of_str_fr_end (Str_parameters** str1, Str_parameters** str2)
     char* isletter1 = (*str1)->ptr2str + sz1;
     char* isletter2 = (*str2)->ptr2str + sz2;
 
-    while(!isalpha(*isletter1))
+    while(!isalpha(*isletter1) && sz1 > 0)
+    {
         isletter1--;
-
-    while(!isalpha(*isletter2))
+        sz1--;
+    }
+    while(!isalpha(*isletter2) && sz2 > 0)
+    {
         isletter2--;
+        sz2--;
+    }
 
     int res_of_comp = my_strcmp_fr_end(isletter1, isletter2);
 

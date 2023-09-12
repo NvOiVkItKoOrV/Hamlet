@@ -13,7 +13,8 @@ struct FileNames
     char* sort_f_name /*= "SortHamlet.txt"*/;
 };
 
-struct Text {
+struct Text
+{
      char* adress_of_buf = nullptr;
      size_t size_of_buf = 0;
      size_t n_lines = 0;
