@@ -30,4 +30,10 @@ enum RES_OF_COMPARE
     IS_GREATER
 };
 
+enum TYPE_OF_COMP
+{
+    FROM_END = -1,
+    FROM_BEGINNING = 1
+};
+
 #endif /*TYPES_H*/
